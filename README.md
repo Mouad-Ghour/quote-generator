@@ -1,2 +1,1 @@
-# quote-generator
- this is my first project as a Nextjs web App
+This is my first Project using NextJs and AWS Amplify.
