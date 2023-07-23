@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const GradientBackgroundCon = styled.div`
-    background: linear-gradient(to right, #053535, #16ffec);
+    background: linear-gradient(to right, #053535, #29978e);
     background-size: 400% 400%;
     animation: gradient 6s ease infinite;
     height: 100vh;
@@ -139,6 +139,7 @@ export const QuoteGeneratorButton = styled.div`
     width: 300px;
     border: 2px solid #16ffec;
     border-radius: 20px;
+    color: white;
 
     margin-top: 20px;
     position: relative;
@@ -155,19 +156,20 @@ export const QuoteGeneratorButton = styled.div`
     border-radius: 10px;
     border: 1px solid white;
     &:hover {
-        /* filter: brightness(3);
+        filter: brightness(3);
         transition: 0.2s all ease-in-out;
         transform: scale(1.1);
-        background-color: #16ffec;
-
-        transform-origin: center; */
+        background-color: #053535;
+        color: grey;
+        font-weight: bolder;
+        transform-origin: center;
     }
 `;
 
 
 export const GenerateQuoteButtonText = styled.div`
  
-    color: white;
+    
     font-family: 'Caveat', cursive;  
     font-size: 35px;
     left: 50%;
