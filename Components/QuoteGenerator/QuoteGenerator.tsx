@@ -177,7 +177,7 @@ export const GenerateQuoteButtonText = styled.div`
     transform: translate(-50%, -50%);
     position: absolute;
     width: 100%;
-    text-align: center;
+    text-align: center;
 
 
 `;

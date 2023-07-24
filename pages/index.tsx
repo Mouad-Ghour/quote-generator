@@ -43,13 +43,18 @@ export default function Home() {
 
           <QuoteGeneratorSubTitle>
 
-              Generate random quotes from famous people
+              <FooterLink 
+              href="https://zenquotes.io/"
+              target='_blank'
+              rel="noopener noreferrer"
+              > ZenQuotes API 
+              </FooterLink>
 
           </QuoteGeneratorSubTitle>
 
           <QuoteGeneratorButton>
 
-            <GenerateQuoteButtonText >
+            <GenerateQuoteButtonText onClick={null}>
 
               Generate Quote
 
