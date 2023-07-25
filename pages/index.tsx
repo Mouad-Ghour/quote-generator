@@ -4,8 +4,8 @@ import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react';
 
 //Components
-import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink, GenerateQuoteButtonText, GradientBackgroundCon, QuoteGeneratorButton, QuoteGeneratorInnerCon, QuoteGeneratorSubTitle, QuoteGeneratorTitle, QuoteGenratorCon } from '@/Components/QuoteGenerator/QuoteGenerator'
-
+import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink,QuoteGeneratorCon, GenerateQuoteButton , GenerateQuoteButtonText, GradientBackgroundCon, QuoteGeneratorInnerCon, QuoteGeneratorSubTitle, QuoteGeneratorTitle } from '@/Components/QuoteGenerator/QuoteGenerator'
+import QuoteGeneratorModal from "../Components/QuoteGenerator/index"
 
 //Images
 import Clouds1 from "../assets/cloud_1.png"
@@ -32,11 +32,16 @@ function isGraphQLResultForquoteQueryName(response: any): response is GraphQLRes
   return response.data && response.data.quoteQueryName && response.data.quoteQueryName.items;
 }
 
-//exports
 
 export default function Home() {
 
   const [numberOfQuotes, setNumberOfQuotes] = useState<Number | null>(0); 
+  const [openGenerator, setOpenGenerator] = useState<boolean>(false);
+  const [processingQuote, setProcessingQuote] = useState<boolean>(false);
+  const [quoteReceived, setQuoteReceived] = useState<String | null>(null);
+
+
+
 
   //function to fetch the number of quotes generated (dynamoDB object)
   const updateQuoteInfo = async () => {
@@ -70,6 +75,30 @@ export default function Home() {
     updateQuoteInfo();
   },[])
 
+  //functions for modal
+
+  const handleCloseGenerator = () => {
+    setOpenGenerator(false);
+  }
+
+  const handleOpenGenerator = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setOpenGenerator(true);
+    setProcessingQuote(true);
+    try{
+      //Run the lambda function
+      // setProcessingQuote(false);
+      // checking be4havior with timout
+      // setTimeout(() => {
+      //   setProcessingQuote(false);
+      // },3000);
+    }
+    catch(error){
+      console.log('error getting quote data',error);
+      setProcessingQuote(false);
+    }
+  }
+
 
   return (
     <>
@@ -79,12 +108,23 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {/*Quotes Generator Modal Pop-up*/}
-      {/* {<QuoteGeneratorModal
-      />} */}
+      <GradientBackgroundCon> 
 
-      {/*Quotes Generator*/}
-      <QuoteGenratorCon>
+       
+        {/*Quotes Generator Modal Pop-up*/}
+
+        <QuoteGeneratorModal
+          open={openGenerator}
+          close={handleCloseGenerator}
+          processingQuote={processingQuote}
+          setProcessingQuote={setProcessingQuote}
+          quoteReceived={quoteReceived}
+          setQuoteReceived={setQuoteReceived}
+        />
+
+         {/*Quotes Generator*/}
+
+      <QuoteGeneratorCon>
 
         <QuoteGeneratorInnerCon>
 
@@ -105,26 +145,24 @@ export default function Home() {
 
           </QuoteGeneratorSubTitle>
 
-          <QuoteGeneratorButton>
+          <GenerateQuoteButton onClick={handleOpenGenerator} >
 
-            <GenerateQuoteButtonText 
-            //onClick={null}
-            >
+            <GenerateQuoteButtonText>
 
               Generate Quote
 
             </GenerateQuoteButtonText>
 
-          </QuoteGeneratorButton>
+          </GenerateQuoteButton>
 
         </QuoteGeneratorInnerCon>
 
-      </QuoteGenratorCon>
+      </QuoteGeneratorCon>
 
 
 
       {/*Background*/}
-      <GradientBackgroundCon> 
+      
 
         {/*Bakcground Images*/}
         <BackgroundImage1
