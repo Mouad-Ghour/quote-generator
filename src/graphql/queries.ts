@@ -2,6 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const generateAQuote = /* GraphQL */ `
+  query GenerateAQuote($input: AWSJSON!) {
+    generateAQuote(input: $input)
+  }
+`;
 export const getQuoteAppData = /* GraphQL */ `
   query GetQuoteAppData($id: ID!) {
     getQuoteAppData(id: $id) {
@@ -10,7 +15,6 @@ export const getQuoteAppData = /* GraphQL */ `
       quotesGenrated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -27,15 +31,13 @@ export const listQuoteAppData = /* GraphQL */ `
         quotesGenrated
         createdAt
         updatedAt
-        __typename
       }
       nextToken
-      __typename
     }
   }
 `;
 export const quoteQueryName = /* GraphQL */ `
-  query QuoteQueryName(
+  query quoteQueryName(
     $queryName: String!
     $sortDirection: ModelSortDirection
     $filter: ModelQuoteAppDataFilterInput
@@ -55,15 +57,8 @@ export const quoteQueryName = /* GraphQL */ `
         quotesGenrated
         createdAt
         updatedAt
-        __typename
       }
       nextToken
-      __typename
     }
-  }
-`;
-export const generateAQuote = /* GraphQL */ `
-  query GenerateAQuote($input: AWSJSON!) {
-    generateAQuote(input: $input)
   }
 `;
