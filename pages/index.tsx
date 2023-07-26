@@ -11,8 +11,8 @@ import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink, GenerateQuot
 import QuoteGeneratorModal from '@/Components/QuoteGenerator'
 
 // Assets
-import Clouds1 from '../assets/cloud-and-thunder.png'
-import Clouds2 from '../assets/cloudy-weather.png'
+import Clouds1 from '../assets/cloud_1.png'
+import Clouds2 from '../assets/cloud_2.png'
 import { API } from 'aws-amplify'
 import { generateAQuote, quotesQueryName } from '@/src/graphql/queries'
 import { GraphQLResult } from '@aws-amplify/api-graphql'
