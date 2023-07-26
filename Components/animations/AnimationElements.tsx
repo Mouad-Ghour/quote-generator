@@ -19,6 +19,7 @@ export const ImageBlobCon = styled.div`
         z-index: 99999;
         transition: 0.3s ease-in-out;
         box-shadow: 0 0 80px 90px rgba(0,0,0,0.6);
+        width: fit-content;
         /* height: 100px; */
         width: fit-content;
         @media only screen and (max-width: 800px) {
