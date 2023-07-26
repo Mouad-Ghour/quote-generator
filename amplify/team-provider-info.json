@@ -18,11 +18,17 @@
       "function": {
         "quotegenLambda": {
           "deploymentBucketName": "amplify-quotegenerator-dev-185852-deployment",
-          "s3Key": "amplify-builds/quotegenLambda-7177726b572b4f794478-build.zip"
+          "s3Key": "amplify-builds/quotegenLambda-6d354f65694b53707273-build.zip"
         }
       },
       "api": {
         "quotegenerator": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "doubu748xqwon",
+          "type": "cicd"
+        }
       }
     }
   }
