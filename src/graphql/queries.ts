@@ -10,6 +10,7 @@ export const getQuoteAppData = /* GraphQL */ `
       quotesGenerated
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -26,8 +27,10 @@ export const listQuoteAppData = /* GraphQL */ `
         quotesGenerated
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -52,8 +55,10 @@ export const quotesQueryName = /* GraphQL */ `
         quotesGenerated
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;

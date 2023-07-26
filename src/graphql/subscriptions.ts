@@ -12,6 +12,7 @@ export const onCreateQuoteAppData = /* GraphQL */ `
       quotesGenerated
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -25,6 +26,7 @@ export const onUpdateQuoteAppData = /* GraphQL */ `
       quotesGenerated
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -38,6 +40,7 @@ export const onDeleteQuoteAppData = /* GraphQL */ `
       quotesGenerated
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
