@@ -23,7 +23,7 @@ type QuoteAppData
         name: "QuotesQueryName"
         queryField: "quotesQueryName"
       )
-    quotesGenerated: Int!
+    quotesGenerated: Int
     createdAt: String!
     updatedAt: String!
   }

@@ -29,8 +29,8 @@ const QuoteGeneratorModal = ({
     setQuoteReceived,
 }: QuoteGeneratorModalProps) => {
 
-    const wiseDevQuote = '"If you can center a div, anything is possible."';
-    const wiseDevQuoteAuthor = "- a wise senior software engineer";
+    const wiseDevQuote = 'Patience is a virtue, but persistence to the point of success is a blessing.';
+    const wiseDevQuoteAuthor = "- Your Wise Dev";
 
     const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
@@ -83,7 +83,7 @@ const QuoteGeneratorModal = ({
                                     thickness={2.5}
                                 />
                                 <QuoteGeneratorTitle>
-                                    Creating your quote...
+                                    Generating your quote...
                                 </QuoteGeneratorTitle>
                                 <QuoteGeneratorSubTitle style={{marginTop: "20px"}}>
                                     {wiseDevQuote}

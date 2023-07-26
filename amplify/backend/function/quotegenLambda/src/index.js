@@ -23,7 +23,7 @@ const fs = require('fs');
 // Function: update DynamoDB table
 async function updateQuoteDDBObject() {
     const quoteTableName = process.env.API_INSPIRATIONALQUOTES_QUOTEAPPDATATABLE_NAME;
-    const quoteObjectID = "12232-234234-234234234-234234234";
+    const quoteObjectID = "12232-2342234-234234234-234234234";
 
     try {
         var quoteParams = {
@@ -70,8 +70,8 @@ exports.handler = async (event) => {
         quoteAuthor = quoteData[0].a;
       
         // Image construction
-        const width = 750;
-        const height = 483;
+        const width = 640;
+        const height = 480;
         const text = quoteText;
         const words = text.split(" ");
         const lineBreak = 4;
@@ -93,47 +93,47 @@ exports.handler = async (event) => {
       
         // Construct the SVG
         const svgImage = `
-          <svg width="${width}" height="${height}">
-              <style>
-                 .title { 
-                   fill: #ffffff; 
-                  font-size: 20px; 
-                     font-weight: bold;
-                }
-               .quoteAuthorStyles {
-                     font-size: 35px;
+                <svg width="${width}" height="${height}">
+                <style>
+                .title{
+                    fill: #ffffff;
+                    font-size: 20px;
                     font-weight: bold;
-                   padding: 50px;
-              }
-                .footerStyles {
-                  font-size: 20px;
-                     font-weight: bold;
+                }
+                .quoteAuthorStyles{
+                    font-size: 35px;
+                    font-weight: bold;
+                    padding: 50px;    
+                }
+                .footerStyles{
+                    font-size: 20px;
+                    font-weight: bold;
                     fill: lightgrey;
-                   text-anchor: middle;
-                  font-family: Verdana;
-              }
-              </style>
-              <circle cx="382" cy="76" r="44" fill="rgba(255, 255, 255, 0.155)"/>
-              <text x="382" y="76" dy="50" text-anchor="middle" font-size="90" font-family="Verdana" fill="white">"</text>
-              <g>
-                  <rect x="0" y="0" width="${width}" height="auto"></rect>
-                     <text id="lastLineOfQuote" x="375" y="120" font-family="Verdana" font-size="35" fill="white" text-anchor="middle">
-                        ${tspanElements}
-                    <tspan class="quoteAuthorStyles" x="375" dy="1.8em">- ${quoteAuthor}</tspan>
-               </text>
+                    text-anchor: middle;
+                    font-family: Verdana;
+                }
+                </style>
+                <circle cx="320" cy="76" r="44" fill="rgba(255, 255, 255, 0.155)"/>
+                <text x="320" y="76" dy="50" text-anchor="middle" font-size="90" font-family="Verdana" fill="white">"</text>
+                <g>
+                    <rect x="0" y="0" width="${width}" height="auto" ></rect>
+                    <text id="lastLineOfQuote" x="320" y="130" font-family="Verdana" font-size="35" fill="white" text-anchor="middle">
+                    ${tspanElements}
+                    <tspan class="quoteAuthorStyles" x="320" dy="1.8em">- ${quoteAuthor}</tspan>
+                    </text>
                 </g>
-              <text x="${width / 2}" y="${
-          height - 10
-        }" class="footerStyles">Developed by @MouadGh | Quotes from ZenQuotes.io</text>
-          </svg>
-        `;
+                <text x="${width / 2}" y="${
+            height - 10
+          }" class="footerStyles">Developed By @MouadGh | Quotes from ZenQuotes.io</text>
+                </svg>
+                `;
       
         //  Add background images for the svg creation
         const backgroundImages = [
-          "backgrounds/blue.png",
-          "backgrounds/green.png",
-          "backgrounds/red.png",
-          "backgrounds/violet.png",
+          "backgrounds/blue.jpg",
+          "backgrounds/green.jpg",
+          "backgrounds/red.jpg",
+          "backgrounds/violet.jpg",
         ];
       
         const randomIndex = Math.floor(Math.random() * backgroundImages.length);
