@@ -8,10 +8,10 @@ interface AnimatedDownloadButtonProps {
     handleDownload: () => void;
 }
 
-const AnimatedDownloadButton = () => {
+const AnimatedDownloadButton = ({handleDownload}: AnimatedDownloadButtonProps) => {
   return (
     <DownloadQuoteCardCon 
-        // onClick={handleDownload}
+        onClick={handleDownload}
     >
         <CenteredLottie
             loop

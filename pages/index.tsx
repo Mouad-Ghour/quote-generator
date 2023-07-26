@@ -1,118 +1,151 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
-import { useEffect, useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '@/styles/Home.module.css';
 
-//Components
-import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink,QuoteGeneratorCon, GenerateQuoteButton , GenerateQuoteButtonText, GradientBackgroundCon, QuoteGeneratorInnerCon, QuoteGeneratorSubTitle, QuoteGeneratorTitle } from '@/Components/QuoteGenerator/QuoteGenerator'
-import QuoteGeneratorModal from "../Components/QuoteGenerator/index"
+import React, { useEffect, useState } from 'react';
 
-//Images
-import Clouds1 from "../assets/cloud_1.png"
-import Clouds2 from "../assets/cloud_2.png"
-import { API } from 'aws-amplify';
-import { quoteQueryName } from '@/src/graphql/queries';
-import { GraphQLResult } from '@aws-amplify/api-graphql';
+// Components
+import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink, GenerateQuoteButton, GenerateQuoteButtonText, GradientBackgroundCon, QuoteGeneratorCon, QuoteGeneratorInnerCon, QuoteGeneratorSubTitle, QuoteGeneratorTitle, RedSpan } from '@/components/QuoteGenerator/QuoteGeneratorElements'
+import QuoteGeneratorModal from '@/Components/QuoteGenerator'
 
-// interface for our dynamoDB object
+// Assets
+import Clouds1 from '../assets/cloud-and-thunder.png'
+import Clouds2 from '../assets/cloudy-weather.png'
+import { API } from 'aws-amplify'
+import { generateAQuote, quotesQueryName } from '@/src/graphql/queries'
+import { GraphQLResult } from '@aws-amplify/api-graphql'
+
+
+// interface for our appsync <> lambda JSON response
+interface GenerateAQuoteData {
+  generateAQuote: {
+    statusCode: number;
+    headers: { [key: string]: string };
+    body: string;
+  }
+}
+
+
+// interface for our DynamoDB object
 interface UpdateQuoteInfoData {
   id: string;
   queryName: string;
-  quotesGenrated: number;
+  quotesGenerated: number;
   createdAt: string;
   updatedAt: string;
 }
 
-//type quard for our fetch function
-function isGraphQLResultForquoteQueryName(response: any): response is GraphQLResult<{
-  quoteQueryName: {
+// type guard for our fetch function
+function isGraphQLResultForquotesQueryName(response: any): response is GraphQLResult<{
+  quotesQueryName: {
     items: [UpdateQuoteInfoData];
   };
-}>{
-  return response.data && response.data.quoteQueryName && response.data.quoteQueryName.items;
+}> {
+  return response.data && response.data.quotesQueryName && response.data.quotesQueryName.items;
 }
 
 
-export default function Home() {
 
-  const [numberOfQuotes, setNumberOfQuotes] = useState<Number | null>(0); 
-  const [openGenerator, setOpenGenerator] = useState<boolean>(false);
-  const [processingQuote, setProcessingQuote] = useState<boolean>(false);
+export default function Home() {
+  const [numberOfQuotes, setNumberOfQuotes] = useState<Number | null>(0);
+  const [openGenerator, setOpenGenerator] = useState(false);
+  const [processingQuote, setProcessingQuote] = useState(false);
   const [quoteReceived, setQuoteReceived] = useState<String | null>(null);
 
-
-
-
-  //function to fetch the number of quotes generated (dynamoDB object)
+  // Function to fetch our DynamoDB object (quotes generated)
   const updateQuoteInfo = async () => {
-    try{
+    try {
       const response = await API.graphql<UpdateQuoteInfoData>({
-        query: quoteQueryName,
+        query: quotesQueryName,
         authMode: "AWS_IAM",
-        variables: { 
+        variables: {
           queryName: "LIVE",
-         },
+        },
       })
-  // console.log('response',response);
-  
-  //create type gards
+      console.log('response', response);
+      // setNumberOfQuotes();
 
-      if(!isGraphQLResultForquoteQueryName(response)){
+      // Create type guards
+      if (!isGraphQLResultForquotesQueryName(response)) {
         throw new Error('Unexpected response from API.graphql');
       }
-      if(!response.data){
+
+      if (!response.data) {
         throw new Error('Response data is undefined');
       }
-  const receivedNumberOfQuotes = response.data.quoteQueryName.items[0].quotesGenrated;
-  setNumberOfQuotes(receivedNumberOfQuotes);
 
-    } catch(error){
-        console.log('error getting quote data',error);
+      const receivedNumberOfQuotes = response.data.quotesQueryName.items[0].quotesGenerated;
+      setNumberOfQuotes(receivedNumberOfQuotes);
+
+    } catch (error) {
+      console.log('error getting quote data', error)
     }
   }
 
   useEffect(() => {
     updateQuoteInfo();
-  },[])
+  }, [])
 
-  //functions for modal
 
+  // Functions for quote generator modal
   const handleCloseGenerator = () => {
     setOpenGenerator(false);
+    setProcessingQuote(false);
+    setQuoteReceived(null);
   }
 
   const handleOpenGenerator = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setOpenGenerator(true);
     setProcessingQuote(true);
-    try{
-      //Run the lambda function
+    try {
+      // Run Lambda Function
+      const runFunction = "runFunction";
+      const runFunctionStringified = JSON.stringify(runFunction);
+      const response = await API.graphql<GenerateAQuoteData>({
+        query: generateAQuote,
+        authMode: "AWS_IAM",
+        variables: {
+          input: runFunctionStringified,
+        },
+      });
+      const responseStringified = JSON.stringify(response);
+      const responseReStringified = JSON.stringify(responseStringified);
+      const bodyIndex = responseReStringified.indexOf("body=") + 5;
+      const bodyAndBase64 = responseReStringified.substring(bodyIndex);
+      const bodyArray = bodyAndBase64.split(",");
+      const body = bodyArray[0];
+      console.log(body);
+      setQuoteReceived(body);
+
+      // End state:
+      setProcessingQuote(false);
+
+      // Fetch if any new quotes were generated from counter
+      updateQuoteInfo();
+       
       // setProcessingQuote(false);
-      // checking be4havior with timout
       // setTimeout(() => {
       //   setProcessingQuote(false);
-      // },3000);
-    }
-    catch(error){
-      console.log('error getting quote data',error);
+      // }, 3000);
+    } catch (error) {
+      console.log('error generating quote:', error);
       setProcessingQuote(false);
     }
   }
 
-
   return (
     <>
       <Head>
-        <title>Quotes Generator</title>
-        <meta name="description" content="Generated by create next app" />
+        <title>Inspirational Quote Generator</title>
+        <meta name="description" content="A fun project to generate quotes" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GradientBackgroundCon> 
+      {/* Background */}
+      <GradientBackgroundCon>
 
-       
-        {/*Quotes Generator Modal Pop-up*/}
-
+        {/* Quote Generator Modal Pop-Up */}
         <QuoteGeneratorModal
           open={openGenerator}
           close={handleCloseGenerator}
@@ -122,80 +155,48 @@ export default function Home() {
           setQuoteReceived={setQuoteReceived}
         />
 
-         {/*Quotes Generator*/}
+        {/* Quote Generator */}
+        <QuoteGeneratorCon>
+          <QuoteGeneratorInnerCon>
+            <QuoteGeneratorTitle>
+              Daily Inspiration Generator
+            </QuoteGeneratorTitle>
 
-      <QuoteGeneratorCon>
+            <QuoteGeneratorSubTitle>
+              Looking for a splash of inspiration? Generate a quote card with a random inspirational quote provided by <FooterLink href="https://zenquotes.io/" target="_blank" rel="noopener noreferrer">ZenQuotes API</FooterLink>.
+            </QuoteGeneratorSubTitle>
 
-        <QuoteGeneratorInnerCon>
+            <GenerateQuoteButton onClick={handleOpenGenerator}>
+              <GenerateQuoteButtonText>
+                Make a Quote
+              </GenerateQuoteButtonText>
+            </GenerateQuoteButton>
+          </QuoteGeneratorInnerCon>
+        </QuoteGeneratorCon>
 
-          <QuoteGeneratorTitle>
-
-            Quotes Generator
-
-          </QuoteGeneratorTitle>
-
-          <QuoteGeneratorSubTitle>
-
-              <FooterLink 
-              href="https://zenquotes.io/"
-              target='_blank'
-              rel="noopener noreferrer"
-              > ZenQuotes API 
-              </FooterLink>
-
-          </QuoteGeneratorSubTitle>
-
-          <GenerateQuoteButton onClick={handleOpenGenerator} >
-
-            <GenerateQuoteButtonText>
-
-              Generate Quote
-
-            </GenerateQuoteButtonText>
-
-          </GenerateQuoteButton>
-
-        </QuoteGeneratorInnerCon>
-
-      </QuoteGeneratorCon>
-
-
-
-      {/*Background*/}
-      
-
-        {/*Bakcground Images*/}
-        <BackgroundImage1
+        {/* Background Images */}
+        <BackgroundImage1 
           src={Clouds1}
           height="300"
-          alt="CloudyBakcgournd1"
-          />
+          alt="cloudybackground1"
+        />
 
-        <BackgroundImage2
+        <BackgroundImage2 
           src={Clouds2}
           height="300"
-          alt="CloudyBakcgournd2"
-          />
+          alt="cloudybackground1"
+        />
 
-        {/*Footer*/}
-          <FooterCon>
-            <>
-              Quotes Generated: {numberOfQuotes}
-              <br/>
-              Developed with next by  &nbsp; 
-              <FooterLink
-                href="https://www.linkedin.com/in/mouadghourdou/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-               @MouadGh
-              </FooterLink>
-
-            </>
-          </FooterCon>
+        {/* Footer */}
+        <FooterCon>
+          <>
+            Quotes Generated: {numberOfQuotes}
+            <br />
+            Developed with Nextjs by <FooterLink href="https://youtube.com/brianhhough" target="_blank" rel="noopener noreferrer"> @MouadGh </FooterLink>
+          </>
+        </FooterCon>
 
       </GradientBackgroundCon>
-
     </>
-    )
+  )
 }

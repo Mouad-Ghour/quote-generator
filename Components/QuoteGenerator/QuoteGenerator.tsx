@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Box, CircularProgress } from "@mui/material";
 
 export const GradientBackgroundCon = styled.div`
-  background: linear-gradient(to right, #052b2e, #1ff7da);
+  background: linear-gradient(to right, #000046, #1cb5e0);
   background-size: 400% 400%;
   animation: gradient 6s ease infinite;
   height: 100vh;
@@ -25,14 +25,14 @@ export const GradientBackgroundCon = styled.div`
 export const BackgroundImage1 = styled(Image)`
   position: relative;
   z-index: 1;
-  margin-left: 6%;
+  margin-left: -10px;
   margin-top: -10px;
 `;
 
 export const BackgroundImage2 = styled(Image)`
   position: fixed;
   z-index: 1;
-  right: 4%;
+  right: -120px;
   bottom: -10px;
 `;
 

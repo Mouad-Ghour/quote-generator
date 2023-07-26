@@ -9,10 +9,9 @@ export const onCreateQuoteAppData = /* GraphQL */ `
     onCreateQuoteAppData(filter: $filter) {
       id
       queryName
-      quotesGenrated
+      quotesGenerated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -23,10 +22,9 @@ export const onUpdateQuoteAppData = /* GraphQL */ `
     onUpdateQuoteAppData(filter: $filter) {
       id
       queryName
-      quotesGenrated
+      quotesGenerated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -37,10 +35,9 @@ export const onDeleteQuoteAppData = /* GraphQL */ `
     onDeleteQuoteAppData(filter: $filter) {
       id
       queryName
-      quotesGenrated
+      quotesGenerated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;

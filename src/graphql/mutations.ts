@@ -10,10 +10,9 @@ export const createQuoteAppData = /* GraphQL */ `
     createQuoteAppData(input: $input, condition: $condition) {
       id
       queryName
-      quotesGenrated
+      quotesGenerated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -25,10 +24,9 @@ export const updateQuoteAppData = /* GraphQL */ `
     updateQuoteAppData(input: $input, condition: $condition) {
       id
       queryName
-      quotesGenrated
+      quotesGenerated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;
@@ -40,10 +38,9 @@ export const deleteQuoteAppData = /* GraphQL */ `
     deleteQuoteAppData(input: $input, condition: $condition) {
       id
       queryName
-      quotesGenrated
+      quotesGenerated
       createdAt
       updatedAt
-      __typename
     }
   }
 `;

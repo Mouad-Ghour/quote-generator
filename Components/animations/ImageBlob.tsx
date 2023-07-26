@@ -1,10 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-const ImageBlob = () => {
-  return (
-    <div>ImageBlob</div>
-  )
+interface ImageBlobProps {
+    quoteReceived: String | null;
+    blobUrl: string | null;
+}
+
+const ImageBlob = ({ 
+    quoteReceived, 
+    blobUrl 
+}: ImageBlobProps) => {
+    // const [blobUrl, setBlobUrl] = useState<string | null>(null);
+
+    // useEffect(() => {
+        // const response = {
+        //     "statusCode": 200,
+        //     "headers": {
+        //         "Content-Type": "image/png",
+        //         "Access-Control-Allow-Origin": "*"
+            // },
+            // "body": "iVBORw0KGgoAAAANSUhEUgAAASwAAACWCAYAAABkW7XSAAABJElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        // } 
+    //     const binaryData = Buffer.from(response.body, 'base64');
+    //     const blob = new Blob([binaryData], { type: response.headers["Content-Type"] });
+    //     const newBlobUrl = URL.createObjectURL(blob);
+    //     setBlobUrl(newBlobUrl);
+    //     return () => {
+    //         URL.revokeObjectURL(newBlobUrl);
+    //     }
+    // }, []);
+
+    if (!blobUrl) {
+        return null;
+    }
+
+    return (
+        <Image src={blobUrl} alt="Generated quote card" width={150} height={100} />
+    )
 }
 
 export default ImageBlob

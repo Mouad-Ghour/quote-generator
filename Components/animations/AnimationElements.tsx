@@ -46,6 +46,7 @@ export const DownloadQuoteCardCon = styled.div`
     margin-top: 20px;
     transform: scale(0.7);
     width: calc(70vw/2);
+    margin: auto;
     &:hover {
         background: rgb(193 193 255 / 3%);
         box-shadow: 0 8px 32px 0 rgb(31 38 135 / 37%);
