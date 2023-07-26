@@ -161,7 +161,7 @@ export default function Home() {
         <QuoteGeneratorCon>
           <QuoteGeneratorInnerCon>
             <QuoteGeneratorTitle>
-              Daily Inspiration Generator
+              Quote Generator
             </QuoteGeneratorTitle>
 
             <QuoteGeneratorSubTitle>
@@ -170,7 +170,7 @@ export default function Home() {
 
             <GenerateQuoteButton onClick={handleOpenGenerator}>
               <GenerateQuoteButtonText>
-                Make a Quote
+                Generate a Quote
               </GenerateQuoteButtonText>
             </GenerateQuoteButton>
           </QuoteGeneratorInnerCon>

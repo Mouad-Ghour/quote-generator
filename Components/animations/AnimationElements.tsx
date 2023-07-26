@@ -12,6 +12,7 @@ export const ImageBlobCon = styled.div`
     top: 40px;
     z-index: 99999;
     scale: 1.7;
+    width: fit-content;
     
     &:hover {
         transform: scale(3.8);
@@ -19,6 +20,7 @@ export const ImageBlobCon = styled.div`
         transition: 0.3s ease-in-out;
         box-shadow: 0 0 80px 90px rgba(0,0,0,0.6);
         /* height: 100px; */
+        width: fit-content;
         @media only screen and (max-width: 800px) {
             transform: scale(3.8);
             z-index: 99999;
