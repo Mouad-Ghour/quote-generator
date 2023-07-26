@@ -1,11 +1,13 @@
+
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
 
 import React, { useEffect, useState } from 'react';
 
+
 // Components
-import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink, GenerateQuoteButton, GenerateQuoteButtonText, GradientBackgroundCon, QuoteGeneratorCon, QuoteGeneratorInnerCon, QuoteGeneratorSubTitle, QuoteGeneratorTitle, RedSpan } from '@/components/QuoteGenerator/QuoteGeneratorElements'
+import { BackgroundImage1, BackgroundImage2, FooterCon, FooterLink, GenerateQuoteButton, GenerateQuoteButtonText, GradientBackgroundCon, QuoteGeneratorCon, QuoteGeneratorInnerCon, QuoteGeneratorSubTitle, QuoteGeneratorTitle, RedSpan } from '@/Components/QuoteGenerator/QuoteGenerator'
 import QuoteGeneratorModal from '@/Components/QuoteGenerator'
 
 // Assets
